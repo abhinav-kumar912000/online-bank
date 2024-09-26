@@ -1,0 +1,134 @@
+/* Container for Buttons */
+.button-container {
+    display: flex;
+    justify-content: center; /* Center align buttons horizontally */
+    flex-wrap: wrap; /* Allow buttons to wrap to the next line if necessary */
+    gap: 10px; /* Space between buttons */
+    margin: 20px 0; /* Margin above and below the button container */
+  }
+  
+  .button-container button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 10px;
+    color: rgb(211, 231, 218);
+    background-color: lime;
+    cursor: pointer;
+    font-size: x-large; /* Font size for buttons */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Black shadow effect */
+    transition: box-shadow 0.3s; /* Optional: smooth transition on hover */
+}
+
+.button-container button:hover {
+  scale: 1.25;
+    color: black;
+    background-color: #75f064; /* Darker blue for hover */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.7); /* Darker shadow on hover */
+}
+table {
+    width: 60%; /* Set table width to 50% of the page */
+    border-collapse: collapse;
+    margin: 20px auto; /* Center the table on the page */
+    font-size: 18px;
+    text-align: left;
+  }
+  
+  th, td {
+    padding: 12px 15px;
+    border: 1px solid #dddddd;
+  }
+  
+  th {
+    background-color: #f0f0f5;
+    font-weight: bold;
+  }
+  
+  td {
+    background-color: #ffffff;
+  }
+  
+  h2 {
+    background-color: black;
+    padding: 10px 10px;
+    font-weight: bold; /* Make heading bold */
+    color: lime; /* Heading color */
+    width: 50%;
+    text-align: center; /* Center the heading text */
+    text-shadow: 2px 2px 5px rgba(255, 255, 0, 0.7); /* Yellow shadow */
+    margin: 0 auto; /* Center the heading itself within its container */
+    margin-bottom: 2%;
+}
+
+.dashboard {
+    font-weight: bold; /* Make heading bold */
+    color: lime; /* Heading color */
+    margin-bottom: 20px; /* Space below the heading */
+}
+  
+  
+  /* Style for the Recent Transactions list inside the table */
+  ul {
+    list-style-type: disc;
+    padding-left: 20px;
+  }
+  
+  li {
+    margin-bottom: 5px;
+  }
+  
+  /* Add some spacing between the tables and headings */
+  .details-table, .summary-table {
+    margin-bottom: 20px;
+    width: 50%; /* Ensure both tables are 50% width */
+    margin: 0 auto; /* Center the tables on the page */
+  }
+  
+  .details-table th, .summary-table th {
+    width: 200px;
+  }
+  
+  /* Button styling */
+button {
+    font-family: 'Times New Roman', Times, serif;
+    background-color: #0ceb1b;
+    color: white;
+    padding: 10px 20px;
+    margin: 10px 5px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: x-large;
+    font-weight: bold;
+    text-shadow:  0 6px 12px rgba(0, 0, 0, 0.7);
+  }
+  
+  button:hover {
+    background-color: #45a049;
+  }
+
+  /* Style for the Success Message */
+  .success-message {
+    text-align: center;
+    background-color: #d4edda; /* Light green background */
+    color: #155724; /* Dark green text */
+    padding: 15px;
+    border-radius: 4px;
+    border: 1px solid #c3e6cb;
+    width: 100%;
+    max-width: 600px; /* Limit the width */
+    margin: 20px auto; /* Center the message horizontally */
+  }
+  
+  /* Optional styling for responsive design */
+  @media (max-width: 768px) {
+    th, td {
+      font-size: 16px;
+    }
+  
+    h2 {
+      font-size: 20px;
+    }
+  
+    table, .details-table, .summary-table {
+      width: 100%; /* Make tables full width on small screens */
+    }
+  }

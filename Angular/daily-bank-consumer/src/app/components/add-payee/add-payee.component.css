@@ -1,0 +1,81 @@
+h2 {
+    background-color: black;
+    color: lime;
+    width: 50%;
+    text-align: center; /* Center the heading text */
+    text-shadow: 2px 2px 5px rgba(255, 255, 0, 0.7); /* Yellow shadow */
+    margin: 0 auto; /* Center the heading itself within its container */
+    margin-bottom: 2%;
+    padding: 10px 10px;
+}
+.payee-container {
+    background-color: #0a0000; 
+    color: rgb(7, 252, 68); 
+    padding: 20px;
+    border-radius: 8px;
+    width: 50%;
+    margin: 0 auto; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+label {
+    font-weight: bold; 
+    color: lime; 
+    margin-bottom: 10px;
+}
+
+input {
+    background-color: rgb(12, 0, 0); /* Dark background */
+    color: rgb(11, 248, 11); /* Bright text color */
+    margin-bottom: 15px; /* Space between inputs */
+    padding: 8px; /* Padding inside the input */
+    width: 100%; /* Full width */
+    max-width: 400px; /* Set a maximum width for input fields */
+    border: 3px solid lime; /* Lime border */
+    border-radius: 4px; /* Rounded corners */
+    box-sizing: border-box; /* Ensure padding and border are included in width */
+}
+
+input:focus {
+    border-color: lime; /* Keep lime border on focus */
+    outline: none; /* Remove default outline */
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-between; /* Space between buttons */
+    width: 100%; /* Ensure it takes full width */
+    max-width: 400px; /* Align with the input fields */
+}
+button {
+    background-color: lime; 
+    color: black; 
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px; /* Space above the first button */
+}
+
+button.reset {
+    margin-top: 20px; /* Add more space above the reset button */
+}
+
+button:disabled {
+    background-color: #777; 
+}
+
+.success-message {
+    margin-top: 15px;
+    color: lime; 
+    font-weight: bold; 
+    text-align: center; 
+}
+
+@media (max-width: 768px) {
+    .payee-container {
+        width: 90%; 
+    }
+}

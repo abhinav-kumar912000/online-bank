@@ -1,0 +1,92 @@
+<!-- Form for Registering Internet Banking -->
+<div class="container">
+  <form (ngSubmit)="onSubmit(registerForm)" #registerForm="ngForm">
+      <div class="form-group">
+        <label for="accountNumber">Account Number:</label>
+        <input type="text" id="accountNumber" name="accountNumber" 
+               [(ngModel)]="model.accountNumber" required 
+               pattern="[0-9]{10}" 
+               minlength="10" 
+               maxlength="10" 
+               #accountNumber="ngModel">
+        <div *ngIf="accountNumber.invalid && (accountNumber.dirty || accountNumber.touched)" class="error">
+          Invalid account number. Please enter exactly 10 digits.
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <label for="userId">User ID:</label>
+        <input type="text" id="userId" name="userId" 
+               [(ngModel)]="model.userId" required 
+               pattern="[a-zA-Z0-9]{6,20}" 
+               minlength="6" 
+               maxlength="20" 
+               #userId="ngModel">
+        <div *ngIf="userId.invalid && (userId.dirty || userId.touched)" class="error">
+          Invalid user ID. Please enter 6-20 alphanumeric characters.
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <label for="loginPassword">Login Password:</label>
+        <input type="password" id="loginPassword" name="loginPassword" 
+               [(ngModel)]="model.loginPassword" required 
+               pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,}$" 
+               minlength="8" 
+               #loginPassword="ngModel">
+        <div *ngIf="loginPassword.invalid && (loginPassword.dirty || loginPassword.touched)" class="error">
+          Invalid login password. Please enter at least 8 characters, including uppercase, lowercase, numbers, and special characters.
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <label for="confirmLoginPassword">Confirm Login Password:</label>
+        <input type="password" id="confirmLoginPassword" name="confirmLoginPassword" 
+               [(ngModel)]="model.confirmLoginPassword" required 
+               pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,}$" 
+               minlength="8" 
+               #confirmLoginPassword="ngModel">
+        <div *ngIf="confirmLoginPassword.invalid && (confirmLoginPassword.dirty || confirmLoginPassword.touched)" class="error">
+          Invalid confirm login password. Please enter at least 8 characters, including uppercase, lowercase, numbers, and special characters.
+        </div>
+        <div *ngIf="model.loginPassword !== model.confirmLoginPassword && (confirmLoginPassword.dirty || confirmLoginPassword.touched)" class="error">
+          Passwords do not match.
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <label for="transactionPassword">Transaction Password:</label>
+        <input type="password" id="transactionPassword" name="transactionPassword" 
+               [(ngModel)]="model.transactionPassword" required 
+               pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,}$" 
+               minlength="8" 
+               #transactionPassword="ngModel">
+        <div *ngIf="transactionPassword.invalid && (transactionPassword.dirty || transactionPassword.touched)" class="error">
+          Invalid transaction password. Please enter at least 8 characters, including uppercase, lowercase, numbers, and special characters.
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <label for="confirmTransactionPassword">Confirm Transaction Password:</label>
+        <input type="password" id="confirmTransactionPassword" name="confirmTransactionPassword" 
+               [(ngModel)]="model.confirmTransactionPassword" required 
+               pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,}$" 
+               minlength="8" 
+               #confirmTransactionPassword="ngModel">
+        <div *ngIf="confirmTransactionPassword.invalid && (confirmTransactionPassword.dirty || confirmTransactionPassword.touched)" class="error">
+          Invalid confirm transaction password. Please enter at least 8 characters, including uppercase, lowercase, numbers, and special characters.
+        </div>
+        <div *ngIf="model.transactionPassword !== model.confirmTransactionPassword && (confirmTransactionPassword.dirty || confirmTransactionPassword.touched)" class="error">
+          Invalid confirm transaction password. Please enter at least 8 characters, including uppercase, lowercase, numbers, and special characters.
+        </div>
+        </div>
+      
+        <div class="button-container">
+          <button type="submit" [disabled]="!registerForm.form.valid">Register</button>
+          <button type="button" (click)="cancel()" class="cancel-button">Cancel</button>
+        </div>
+    </form>
+  
+    <br>
+    <div *ngIf="message" class="message">{{ message }}</div>
+  </div>

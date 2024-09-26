@@ -1,0 +1,12 @@
+package com.wipro.training.bank.exception;
+
+/*
+Author-Abhinav Kumar
+Date-Sep 16, 2024
+Time-6:41:48 PM
+Project-daily-bank
+*/
+
+public class DuplicateDataException {
+
+}

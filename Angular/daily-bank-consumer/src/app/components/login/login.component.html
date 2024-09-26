@@ -1,0 +1,61 @@
+<div class="container vh-100 vw-100">
+    <div class="row justify-content-center"> 
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header bg-dark text-white">
+            <h4>Login Form</h4>
+          </div>
+          <div class="card-body bg-dark">
+            <form #loginForm="ngForm" (ngSubmit)="onSubmit()" novalidate>
+              <div class="form-group">
+                <label for="userId" class="lime-text">UserId:</label>
+                <input type="userId" id="userId" name="userId" class="form-control lime-border"
+                  [(ngModel)]="loginData.userId" required #userId="ngModel"
+                  [ngClass]="{'is-invalid': userId.invalid && (userId.dirty || userId.touched)}" />
+                <div *ngIf="userId.invalid && (userId.dirty || userId.touched)" class="invalid-feedback">
+                  <div *ngIf="userId.errors?.['required']">userId is required.</div>
+                  <div *ngIf="userId.errors?.['userId']">Invalid userId format.</div>
+                </div>
+              </div>
+  
+              <div class="form-group mt-3">
+                <label for="loginPassword" class="lime-text">Login Password:</label>
+                <input type="password" id="loginPassword" name="loginPassword" class="form-control lime-border"
+                  [(ngModel)]="loginData.loginPassword" required #loginPassword="ngModel"
+                  [ngClass]="{'is-invalid': loginPassword.invalid && (loginPassword.dirty || loginPassword.touched)}" />
+                <div *ngIf="loginPassword.invalid && (loginPassword.dirty || loginPassword.touched)" class="invalid-feedback">
+                  <div *ngIf="loginPassword.errors?.['required']">loginPassword is required.</div>
+                </div>
+              </div>
+  
+              <button type="submit" class="btn btn-primary mt-3 d-block mx-auto" [disabled]="loginForm.invalid">Login</button>
+              
+              <div *ngIf="errorMessage" class="alert alert-danger mt-3">{{ errorMessage }}</div>
+              <div *ngIf="successMessage" class="alert alert-success mt-3">{{ successMessage }}</div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Add the following CSS -->
+  <style>
+    .bg-dark {
+      background-color: #333 !important;
+    }
+    
+    .lime-text {
+      color: lime;
+    }
+  
+    .lime-border {
+      border: 2px solid lime;
+    }
+  
+    .form-control:focus {
+      box-shadow: none;
+      border-color: lime;
+    }
+  </style>
+  

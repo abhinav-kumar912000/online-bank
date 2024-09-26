@@ -1,0 +1,16 @@
+package com.wipro.training.bank.repository;
+
+import org.springframework.data.mongodb.repository.MongoRepository;
+
+import com.wipro.training.bank.model.Admin;
+
+/*
+Author-Abhinav Kumar
+Date-Sep 13, 2024
+Time-6:52:31 PM
+Project-daily-bank
+*/
+
+public interface AdminRepository  extends MongoRepository<Admin, String>{
+
+}

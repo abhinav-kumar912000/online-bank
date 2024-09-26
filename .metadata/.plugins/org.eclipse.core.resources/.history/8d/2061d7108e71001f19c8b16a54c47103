@@ -1,0 +1,40 @@
+package com.wipro.training.bank.controller;
+
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.wipro.training.bank.controller.dao.AdminRequest;
+import com.wipro.training.bank.model.Admin;
+import com.wipro.training.bank.service.AdminService;
+
+/*
+Author-Abhinav Kumar
+Date-Sep 13, 2024
+Time-9:32:20 AM
+Project-daily-bank
+ */
+
+@RestController
+@RequestMapping("/api/admin")
+public class AdminController {
+
+	private final AdminService adminService;
+
+	public AdminController(AdminService adminService) {
+		this.adminService = adminService;
+	}
+
+	// POST for credit money
+	@PostMapping("/credit")
+	public Admin creditMoney(@RequestBody AdminRequest request) {
+		return adminService.creditMoney(request);
+	}
+
+	// POST for debit money
+	@PostMapping("/debit")
+	public Admin debitMoney(@RequestBody AdminRequest request) {
+		return adminService.debitMoney(request);
+	}
+}

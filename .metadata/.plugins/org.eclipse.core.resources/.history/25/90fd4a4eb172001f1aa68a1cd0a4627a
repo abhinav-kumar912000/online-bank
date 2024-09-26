@@ -1,0 +1,88 @@
+package com.wipro.training.bank.controller;
+
+import java.util.List;
+import java.util.Map;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.wipro.training.bank.model.Account;
+import com.wipro.training.bank.model.Payee;
+import com.wipro.training.bank.service.PayeeService;
+
+
+/*
+Author-Abhinav Kumar
+Date-Sep 14, 2024
+Time-9:06:06 PM
+Project-daily-bank
+*/
+
+@RestController
+@RequestMapping("/api/account")
+public class PayeeController {
+
+
+	private static final Logger logger = LoggerFactory.getLogger(AccountController.class);
+	private final PayeeService payeeService;
+
+	public PayeeController(PayeeService payeeService) {
+		this.payeeService = payeeService;
+	}
+
+
+	/*
+	 * http://localhost:8085/api/account/1841413158/payee
+	 * {
+			  "payee": {
+			    "name": "Aniket",
+			    "accountNumber": "1559318849",
+			    "confirmAccountNumber": "1559318849",
+			    "nickname": "chhotu"
+			  }
+			}
+
+	 */
+	@PostMapping("/{accountNumber}/payee")
+	public ResponseEntity<Account> addPayee(
+			@PathVariable String accountNumber,
+			@RequestBody Map<String, Object> requestBody) {
+
+		Map<String, String> payeeData = (Map<String, String>) requestBody.get("payee");
+
+		// Extract payee details from the request
+		Payee newPayee = new Payee();
+		newPayee.setBeneficiaryName(payeeData.get("name"));
+		newPayee.setAccountNumber(payeeData.get("accountNumber"));
+		newPayee.setNickname(payeeData.getOrDefault("nickname", ""));
+
+		String confirmAccountNumber = payeeData.get("confirmAccountNumber");
+
+		try {
+			Account updatedAccount = payeeService.addPayee(accountNumber, newPayee, confirmAccountNumber);
+			return ResponseEntity.ok(updatedAccount);
+		} catch (IllegalArgumentException e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+		}
+	}
+
+
+
+	@GetMapping("/{accountNumber}/payees")
+	public ResponseEntity<List<Payee>> getPayees(@PathVariable String accountNumber) {
+		try {
+			List<Payee> payees = payeeService.getPayees(accountNumber);
+			return ResponseEntity.ok(payees);
+		} catch (IllegalArgumentException e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+		}
+	}
+}

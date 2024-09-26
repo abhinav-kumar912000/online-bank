@@ -1,0 +1,34 @@
+package com.wipro.training.bank.controller;
+
+/*
+Author-Abhinav Kumar
+Date-Sep 14, 2024
+Time-7:32:53 PM
+Project-daily-bank
+*/
+
+@RestController
+@RequestMapping("/api/account")
+public class AccountManagementController {
+
+    private final AccountManagementService accountManagementService;
+
+    public AccountManagementController(AccountManagementService accountManagementService) {
+        this.accountManagementService = accountManagementService;
+    }
+
+    @PostMapping("/open")
+    public Account openAccount(@RequestBody Account account) {
+        return accountManagementService.openAccount(account);
+    }
+
+    @GetMapping("/{accountNumber}")
+    public ResponseEntity<AccountDetailsDTO> getAccountDetails(@PathVariable String accountNumber) {
+        AccountDetailsDTO dto = accountManagementService.getAccountDetails(accountNumber);
+        if (dto != null) {
+            return ResponseEntity.ok(dto);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+    }
+}

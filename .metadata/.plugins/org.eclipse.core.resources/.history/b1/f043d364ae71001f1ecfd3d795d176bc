@@ -1,0 +1,59 @@
+package com.wipro.training.bank.controller;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.wipro.training.bank.controller.dao.LoginRequest;
+import com.wipro.training.bank.controller.dao.RegisterRequest;
+import com.wipro.training.bank.model.Account;
+import com.wipro.training.bank.service.AccountService;
+
+/*
+Author-Abhinav Kumar
+Date-Sep 13, 2024
+Time-9:29:48 AM
+Project-daily-bank
+*/
+
+@RestController
+@RequestMapping("/api/account")
+public class AccountController {
+	
+	private static final Logger logger = LoggerFactory.getLogger(AccountController.class);
+    private final AccountService accountService;
+
+    public AccountController(AccountService accountService) {
+        this.accountService = accountService;
+    }
+
+    @PostMapping("/open")
+    public Account openAccount(@RequestBody Account account) {
+        logger.info("Opening account for user");
+        return accountService.openAccount(account);
+    }
+
+    @PostMapping("/register")
+    public Account registerInternetBanking(@RequestBody RegisterRequest request) {
+        logger.info("Registering internet banking for account number: {}", request.getAccountNumber());
+        return accountService.registerInternetBanking(request);
+    }
+
+    @PostMapping("/login")
+    public Account login(@RequestBody LoginRequest loginRequest) {
+        logger.info("Attempting login for user ID: {}", loginRequest.getUserId());
+        return accountService.login(loginRequest);
+    }
+
+    @GetMapping("/{accountNumber}")
+    public Account getAccountDetails(@PathVariable String accountNumber) {
+        logger.info("Fetching account details for account number: {}", accountNumber);
+        return accountService.getAccountDetails(accountNumber);
+    }
+
+}

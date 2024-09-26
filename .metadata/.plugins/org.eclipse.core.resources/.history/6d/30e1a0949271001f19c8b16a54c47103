@@ -1,0 +1,28 @@
+package com.wipro.training.bank.model;
+
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+/*
+Author-Abhinav Kumar
+Date-Sep 13, 2024
+Time-9:24:22 AM
+Project-daily-bank
+*/
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
+public class Admin {
+	
+	private double creditAmount;
+    private double debitAmount;
+    private double totalAmount;
+    private LocalDateTime transactionTime;
+    private List<Transaction> transactions = new ArrayList<>();
+
+}

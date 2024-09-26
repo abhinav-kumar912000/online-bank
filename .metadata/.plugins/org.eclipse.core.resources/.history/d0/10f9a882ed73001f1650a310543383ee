@@ -1,0 +1,132 @@
+package com.wipro.training.bank.controller;
+
+import java.util.Map;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.wipro.training.bank.dao.AccountDetailsDTO;
+import com.wipro.training.bank.dao.RegisterRequest;
+import com.wipro.training.bank.exception.ResourceNotFoundException;
+import com.wipro.training.bank.model.Account;
+import com.wipro.training.bank.service.AccountService;
+
+/*
+Author - Abhinav Kumar
+Date - Sep 13, 2024
+Time - 9:29:48 AM
+Project - daily-bank
+ */
+
+@RestController
+@RequestMapping("/api/account")
+public class AccountController {
+
+	private static final Logger logger = LoggerFactory.getLogger(AccountController.class);
+
+	private final AccountService accountService;
+
+	// Constructor injection for AccountService
+	public AccountController(AccountService accountService) {
+		this.accountService = accountService;
+	}
+
+	/**
+	 * Endpoint to open a new account.
+	 * 
+	 * Example request:
+	 * POST http://localhost:8085/api/account/open
+	 * 
+	 * Request body:
+	 * {
+	 *   "personalDetails": {
+	 *     "title": "Mr",
+	 *     "firstName": "Abhinav",
+	 *     "middleName": "K",
+	 *     "lastName": "Bishwas",
+	 *     "fatherName": "Kamal Kishore",
+	 *     "mobile": "1234569980",
+	 *     "email": "abhinav.k@example.com",
+	 *     "adhar": "1299-5678-9012",
+	 *     "dob": "2000-01-01"
+	 *   },
+	 *   "address": {
+	 *     "addressLine1": "Sautha Road",
+	 *     "addressLine2": "Sarochia",
+	 *     "landmark": "Ambedakar Mission",
+	 *     "state": "Bihar",
+	 *     "city": "Kasba",
+	 *     "pincode": "854325"
+	 *   }
+	 * }
+	 */
+	@PostMapping("/open")
+	public Account openAccount(@RequestBody Account account) {
+		logger.info("Opening account for user");
+		return accountService.openAccount(account);
+	}
+
+	/**
+	 * Endpoint to register for internet banking.
+	 * 
+	 * Example request:
+	 * POST http://localhost:8085/api/account/register
+	 * 
+	 * Request body:
+	 * {
+	 *   "accountNumber": "1947969018",
+	 *   "userId": "Abhinav123",
+	 *   "loginPassword": "password123",
+	 *   "confirmLoginPassword": "password123",
+	 *   "transactionPassword": "transaction123",
+	 *   "confirmTransactionPassword": "transaction123"
+	 * }
+	 */
+	@PostMapping("/register")
+	public Account registerInternetBanking(@RequestBody RegisterRequest request) {
+		logger.info("Registering internet banking for account number: {}", request.getAccountNumber());
+		return accountService.registerInternetBanking(request);
+	}
+
+	/**
+	 * Endpoint to get account details by account number.
+	 * 
+	 * Example request:
+	 * GET http://localhost:8085/api/account/{accountNumber}
+	 * 
+	 */
+	@GetMapping("/{accountNumber}")
+	public ResponseEntity<AccountDetailsDTO> getAccountDetails(@PathVariable String accountNumber) {
+		AccountDetailsDTO dto = accountService.getAccountDetails(accountNumber);
+
+		if (dto != null) {
+			return ResponseEntity.ok(dto);
+		} else {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND)
+					.body(null);  // Or return a message in case the account is not found
+		}
+	}
+
+	//GET ---> http://localhost:8085/api/account/summary/1043118155
+	@GetMapping("/summary/{accountNumber}")
+	public ResponseEntity<Map<String, Object>> getAccountSummary(@PathVariable String accountNumber) {
+		logger.info("Request received to get account summary for account number: {}", accountNumber);
+
+		try {
+			Map<String, Object> accountSummary = accountService.getAccountSummary(accountNumber);
+			logger.info("Retrieved account summary for account number: {}", accountNumber);
+			return ResponseEntity.ok(accountSummary);
+		} catch (ResourceNotFoundException e) {
+			logger.error("Error retrieving account summary for account number: {} - {}", accountNumber, e.getMessage());
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+		}
+	}
+}

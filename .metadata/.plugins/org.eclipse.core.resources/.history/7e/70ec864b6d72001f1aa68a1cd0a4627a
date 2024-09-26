@@ -1,0 +1,27 @@
+package com.wipro.training.bank.model;
+
+import java.time.LocalDateTime;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+/*
+Author-Abhinav Kumar
+Date-Sep 13, 2024
+Time-10:50:06 AM
+Project-daily-bank
+*/
+@NoArgsConstructor
+@Data
+public class Transaction {
+	
+	private String fromAccount;
+	private String toAccount;
+	private double amount;
+    private String type; // "CREDIT" or "DEBIT" or "NEFT"
+    private double totalAmount; // balance after the transaction
+    private LocalDateTime transactionDate;
+    private String remark;
+
+}

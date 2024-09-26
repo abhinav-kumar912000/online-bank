@@ -1,0 +1,78 @@
+package com.wipro.training.bank.service;
+
+import java.time.LocalDateTime;
+
+import org.springframework.stereotype.Service;
+
+import com.wipro.training.bank.controller.dao.AdminRequest;
+import com.wipro.training.bank.exception.AccountNotFoundException;
+import com.wipro.training.bank.model.Account;
+import com.wipro.training.bank.model.Admin;
+import com.wipro.training.bank.model.Transaction;
+import com.wipro.training.bank.repository.AccountRepository;
+
+/*
+Author-Abhinav Kumar
+Date-Sep 13, 2024
+Time-9:37:56 AM
+Project-daily-bank
+ */
+
+@Service
+public class AdminService {
+
+	private final AccountRepository accountRepository;
+
+    public AdminService(AccountRepository accountRepository) {
+        this.accountRepository = accountRepository;
+    }
+
+    public Admin creditMoney(AdminRequest request) {
+        Account account = accountRepository.findByAccountNumber(request.getAccountNumber());
+        if (account == null) {
+            throw new AccountNotFoundException("Account not found with account number: " + request.getAccountNumber());
+        }
+
+        Admin admin = account.getAdmin();
+        if (admin == null) {
+            // Initialize admin if not already present
+            admin = new Admin();
+            account.setAdmin(admin);
+        }
+
+        admin.setCreditAmount(request.getAmount());
+        admin.setTotalAmount(admin.getTotalAmount() + request.getAmount());
+
+        // Create and add transaction
+        Transaction transaction = new Transaction(request.getAmount(), "CREDIT", LocalDateTime.now());
+        admin.getTransactions().add(transaction);
+
+        accountRepository.save(account);
+        return admin;
+    }
+
+    public Admin debitMoney(AdminRequest request) {
+        Account account = accountRepository.findByAccountNumber(request.getAccountNumber());
+        if (account == null) {
+            throw new AccountNotFoundException("Account not found with account number: " + request.getAccountNumber());
+        }
+
+        Admin admin = account.getAdmin();
+        if (admin == null) {
+            // Initialize admin if not already present
+            admin = new Admin();
+            account.setAdmin(admin);
+        }
+
+        admin.setDebitAmount(request.getAmount());
+        admin.setTotalAmount(admin.getTotalAmount() - request.getAmount());
+
+        // Create and add transaction
+        Transaction transaction = new Transaction(request.getAmount(), "DEBIT", LocalDateTime.now());
+        admin.getTransactions().add(transaction);
+
+        accountRepository.save(account);
+        return admin;
+    }
+
+}

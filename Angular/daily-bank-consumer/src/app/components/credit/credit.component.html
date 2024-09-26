@@ -1,0 +1,27 @@
+<h2 class="credit-heading">Credit Money</h2>
+<form (ngSubmit)="credit()" class="credit-form">
+  <div class="form-group">
+    <label for="accountNumber">Account Number:</label>
+    <input [(ngModel)]="request.accountNumber" name="accountNumber" id="accountNumber" placeholder="Account Number" required>
+  </div>
+  <div class="form-group">
+    <label for="amount">Amount:</label>
+    <input [(ngModel)]="request.amount" name="amount" id="amount" type="number" placeholder="Amount" required>
+  </div>
+  <div class="form-group">
+    <label for="username">Username:</label>
+    <input [(ngModel)]="request.username" name="username" id="username" placeholder="Username" required>
+  </div>
+  <div class="form-group">
+    <label for="password">Password:</label>
+    <input [(ngModel)]="request.password" name="password" id="password" type="password" placeholder="Password" required>
+  </div>
+  
+  <div class="button-container">
+    <button type="submit">Credit</button>
+    <button type="reset" (click)="resetForm()">Reset</button>
+  </div>
+</form>
+<!-- Success and Error Messages -->
+<div *ngIf="successMessage" class="alert alert-success">{{ successMessage }}</div>
+<div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>

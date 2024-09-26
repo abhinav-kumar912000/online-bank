@@ -1,0 +1,147 @@
+package com.wipro.training.bank.service;
+
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
+import com.wipro.training.bank.dao.AccountDetailsDTO;
+import com.wipro.training.bank.dao.LoginRequest;
+import com.wipro.training.bank.dao.RegisterRequest;
+import com.wipro.training.bank.exception.ResourceNotFoundException;
+import com.wipro.training.bank.model.Account;
+import com.wipro.training.bank.model.Payee;
+import com.wipro.training.bank.model.Transaction;
+import com.wipro.training.bank.repository.AccountRepository;
+import com.wipro.training.bank.util.EncryptionUtil;
+
+/*
+Author-Abhinav Kumar
+Date-Sep 13, 2024
+Time-9:36:10 AM
+Project-daily-bank
+ */
+
+@Service
+public class AccountService {
+
+	private final AccountRepository accountRepository;
+
+	//DI using constructor
+	public AccountService(AccountRepository accountRepository) {
+		this.accountRepository = accountRepository;
+	}
+
+	public Account openAccount(Account account) {
+		// Generate a 10-digit unique account number
+		account.setAccountNumber(generateAccountNumber());
+		return accountRepository.save(account);
+	}
+
+	public Account registerInternetBanking(RegisterRequest request) {
+		Account account = accountRepository.findByAccountNumber(request.getAccountNumber());
+		if (account != null) {
+			if (request.getLoginPassword().equals(request.getConfirmLoginPassword()) &&
+					request.getTransactionPassword().equals(request.getConfirmTransactionPassword())) {
+
+				// Encrypt passwords before saving
+				account.setUserId(request.getUserId());
+				account.setLoginPassword(EncryptionUtil.encrypt(request.getLoginPassword()));
+				account.setTransactionPassword(EncryptionUtil.encrypt(request.getTransactionPassword()));
+
+				return accountRepository.save(account);
+			} else {
+				throw new IllegalArgumentException("Passwords do not match");
+			}
+		}
+		return null;
+	}
+
+	public Account login(LoginRequest loginRequest) {
+		Account account = accountRepository.findByUserId(loginRequest.getUserId());
+		if (account != null) {
+			// Decrypt the stored password and compare with the provided password
+			String decryptedPassword = EncryptionUtil.decrypt(account.getLoginPassword());
+			if (decryptedPassword.equals(loginRequest.getLoginPassword())) {
+				return account; // Login successful
+			} else {
+				throw new IllegalArgumentException("Invalid login credentials");
+			}
+		} else {
+			throw new IllegalArgumentException("Account not found");
+		}
+	}
+
+	public AccountDetailsDTO getAccountDetails(String accountNumber) {
+		Account account = accountRepository.findByAccountNumber(accountNumber);
+		if (account != null) {
+			AccountDetailsDTO dto = new AccountDetailsDTO();
+			dto.setAccountNumber(account.getAccountNumber());
+			dto.setUserId(account.getUserId());
+			dto.setTitle(account.getPersonalDetails().getTitle());
+			dto.setFirstName(account.getPersonalDetails().getFirstName());
+			dto.setMiddleName(account.getPersonalDetails().getMiddleName());
+			dto.setLastName(account.getPersonalDetails().getLastName());
+			dto.setFatherName(account.getPersonalDetails().getFatherName());
+			dto.setEmail(account.getPersonalDetails().getEmail());
+			dto.setMobile(account.getPersonalDetails().getMobile());
+			dto.setAdhar(account.getPersonalDetails().getAdhar());
+			dto.setDob(account.getPersonalDetails().getDob());
+			dto.setAddressLine1(account.getAddress().getAddressLine1());
+			dto.setAddressLine2(account.getAddress().getAddressLine2());
+			dto.setLandmark(account.getAddress().getLandmark());
+			dto.setCity(account.getAddress().getCity());
+			dto.setState(account.getAddress().getState());
+			dto.setPincode(account.getAddress().getPincode());
+
+			return dto;
+		} else {
+			return null;
+		}
+	}
+
+	public List<Transaction> getTransactionDetails(String accountNumber) {
+		Account account = accountRepository.findByAccountNumber(accountNumber);
+		if (account != null && account.getAdmin() != null) {
+			return account.getAdmin().getTransactions();
+		} else {
+			throw new IllegalArgumentException("Account or transaction details not found");
+		}
+	}
+
+	private String generateAccountNumber() {
+		// Logic to generate unique 10-digit account number
+		return String.valueOf((long)(Math.random() * 1_000_000_000L + 1_000_000_000L));
+	}
+
+	public Account addPayee(String accountNumber, Payee newPayee, String confirmAccountNumber) {
+		// Check if the account to which we are adding the payee exists
+		Account account = accountRepository.findByAccountNumber(accountNumber);
+		if (account == null) {
+			throw new ResourceNotFoundException("Account with account number " + accountNumber + " not found.");
+		}
+
+		// Check if the account numbers match
+		if (!newPayee.getAccountNumber().equals(confirmAccountNumber)) {
+			throw new IllegalArgumentException("Account number and confirmation account number do not match.");
+		}
+
+		// Verify that the payee's account number exists in the database
+		Account payeeAccount = accountRepository.findByAccountNumber(newPayee.getAccountNumber());
+		if (payeeAccount == null) {
+			throw new ResourceNotFoundException("Payee's account number " + newPayee.getAccountNumber() + " not found.");
+		}
+
+		// Check if the payee already exists for this account
+		boolean payeeExists = account.getPayees().stream()
+				.anyMatch(existingPayee -> existingPayee.getAccountNumber().equals(newPayee.getAccountNumber()));
+
+		if (payeeExists) {
+			throw new IllegalArgumentException("Payee with account number " + newPayee.getAccountNumber() + " already exists in the account.");
+		}
+
+		// Add the new payee to the account's payee list
+		account.getPayees().add(newPayee);
+		return accountRepository.save(account);
+	}
+
+}

@@ -1,0 +1,12 @@
+package com.wipro.training.bank.model;
+
+/*
+Author-Abhinav Kumar
+Date-Sep 13, 2024
+Time-9:22:32 AM
+Project-daily-bank
+*/
+
+public class PersonalDetails {
+
+}

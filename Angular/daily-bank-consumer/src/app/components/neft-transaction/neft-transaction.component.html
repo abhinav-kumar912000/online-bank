@@ -1,0 +1,36 @@
+<h2 style="background-color: black;padding: 10px 10px;">NEFT Transaction</h2>
+<div class="neft-container">
+  <form *ngIf="!transactionCompleted" [formGroup]="neftForm" (ngSubmit)="onSubmit()">
+    <label for="fromAccount">From Account:</label>
+    <input id="fromAccount" formControlName="fromAccount" type="text" required>
+    
+    <label for="toAccount">To Account:</label>
+    <input id="toAccount" formControlName="toAccount" type="text" required>
+    
+    <label for="amount">Amount:</label>
+    <input id="amount" formControlName="amount" type="number" required>
+    
+    <label for="remark">Remark:</label>
+    <input id="remark" formControlName="remark" type="text">
+    
+    <button type="submit" [disabled]="!neftForm.valid">Submit</button>
+  </form>
+  
+  <div *ngIf="successMessage" class="success">{{ successMessage }}</div>
+  
+
+<div *ngIf="recentTransaction" style="margin-top: 20px;">
+  <h3 style="color: lime; font-weight: bold;">Transaction Successfull</h3>
+  <p style="color: lime; font-weight: bold;">From Account: {{ recentTransaction.fromAccount }}</p>
+  <p style="color: lime; font-weight: bold;">To Account: {{ recentTransaction.toAccount }}</p>
+  <p style="color: lime; font-weight: bold;">Amount: {{ recentTransaction.amount }}</p>
+  <p style="color: lime; font-weight: bold;">Type: {{ recentTransaction.type }}</p>
+  <p style="color: lime; font-weight: bold;">Transaction Date: {{ recentTransaction.transactionDate | date:'medium' }}</p>
+  <p style="color: lime; font-weight: bold;">Remark: {{ recentTransaction.remark }}</p>
+</div>
+
+
+  <div *ngIf="errorMessage" class="error-message">
+    {{ errorMessage }}
+  </div>
+</div>

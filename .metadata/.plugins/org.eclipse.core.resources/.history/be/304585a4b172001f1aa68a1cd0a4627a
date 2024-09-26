@@ -1,0 +1,15 @@
+package com.wipro.training.bank.service;
+
+import org.springframework.stereotype.Service;
+
+/*
+Author-Abhinav Kumar
+Date-Sep 14, 2024
+Time-9:07:33 PM
+Project-daily-bank
+*/
+
+@Service
+public class TransactionService {
+
+}

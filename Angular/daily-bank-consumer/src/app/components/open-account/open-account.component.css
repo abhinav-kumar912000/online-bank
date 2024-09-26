@@ -1,0 +1,143 @@
+/* General Styles */
+form {
+    color: lime;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #130101;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  h2 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  fieldset {
+    border: 1px solid #ddd;
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+  }
+  
+  legend {
+    font-weight: bold;
+  }
+  
+  /* Form Elements */
+  label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  input[type="text"],
+  input[type="email"],
+  input[type="date"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+  }
+  
+  button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+  
+  button:disabled {
+    background-color: #6c757d;
+    cursor: not-allowed;
+  }
+  
+  /* Media Queries */
+  @media (max-width: 768px) {
+    form {
+      padding: 15px;
+    }
+  
+    input[type="text"],
+    input[type="email"],
+    input[type="date"] {
+      padding: 8px;
+    }
+  
+    button {
+      padding: 12px;
+      font-size: 14px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    form {
+      padding: 10px;
+    }
+  
+    input[type="text"],
+    input[type="email"],
+    input[type="date"] {
+      padding: 6px;
+    }
+  
+    button {
+      padding: 10px;
+      font-size: 12px;
+    }
+  }
+
+  .error {
+    color: red;
+    font-size: 0.8em;
+  }
+  .success-message {
+    color: green;
+    font-size: 1em;
+    margin-top: 20px;
+  }
+
+  .button-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.button-container button {
+    width: 45%;
+}
+
+select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #3498db; /* blue border */
+  border-radius: 5px;
+  background-color: #f9f9f9; /* light gray background */
+  color: #333; /* dark gray text */
+}
+
+optgroup {
+  font-weight: bold;
+  color: #666; /* darker gray text */
+}
+
+option {
+  padding: 10px;
+  background-color: #fff; /* white background */
+  color: #333; /* dark gray text */
+  border-bottom: 1px solid #eee; /* light gray border */
+}
+
+option:hover {
+  background-color: #dff0d8; /* light green background on hover */
+  color: black; /* dark gray text on hover */
+}
+
+  

@@ -1,0 +1,81 @@
+package com.wipro.training.bank.service;
+
+import org.springframework.stereotype.Service;
+
+import com.wipro.training.bank.dao.AccountDetailsDTO;
+import com.wipro.training.bank.dao.RegisterRequest;
+import com.wipro.training.bank.model.Account;
+import com.wipro.training.bank.repository.AccountRepository;
+import com.wipro.training.bank.util.EncryptionUtil;
+
+/*
+Author - Abhinav Kumar
+Date - Sep 13, 2024
+Time - 9:36:10 AM
+Project - daily-bank
+ */
+
+@Service
+public class AccountService {
+
+    private final AccountRepository accountRepository;
+
+    // Dependency injection using constructor
+    public AccountService(AccountRepository accountRepository) {
+        this.accountRepository = accountRepository;
+    }
+
+    /**
+     * Opens a new account by generating a 10-digit account number and saving the account.
+     *
+     * @param account - Account details to be saved
+     * @return the saved Account object
+     */
+    public Account openAccount(Account account) {
+        // Generate a 10-digit unique account number
+        account.setAccountNumber(generateAccountNumber());
+        return accountRepository.save(account);
+    }
+
+    /**
+     * Registers a user for internet banking by verifying and encrypting passwords.
+     *
+     * @param request - Internet banking registration request containing account number, passwords, and userId
+     * @return the updated Account object if registration is successful, otherwise throws exception
+     */
+    public Account registerInternetBanking(RegisterRequest request) {
+        // Find the account by the account number
+        Account account = accountRepository.findByAccountNumber(request.getAccountNumber());
+        
+        // Check if the account exists
+        if (account != null) {
+            // Check if the login and transaction passwords match the confirmed values
+            if (request.getLoginPassword().equals(request.getConfirmLoginPassword()) &&
+                request.getTransactionPassword().equals(request.getConfirmTransactionPassword())) {
+
+                // Encrypt passwords before saving
+                account.setUserId(request.getUserId());
+                account.setLoginPassword(EncryptionUtil.encrypt(request.getLoginPassword()));
+                account.setTransactionPassword(EncryptionUtil.encrypt(request.getTransactionPassword()));
+
+                // Save the updated account and return
+                return accountRepository.save(account);
+            } else {
+                // Throw an exception if passwords do not match
+                throw new IllegalArgumentException("Passwords do not match");
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Retrieves account details based on the account number and maps it to AccountDetailsDTO.
+     *
+     * @param accountNumber - The account number to look up
+     * @return the AccountDetailsDTO with the account's personal and address information, or null if the account doesn't exist
+     */
+    public AccountDetailsDTO getAccountDetails(String accountNumber) {
+        // Find the account by the account number
+        Account account = accountRepository.findByAccountNumber(accountNumber);
+        
+        // If

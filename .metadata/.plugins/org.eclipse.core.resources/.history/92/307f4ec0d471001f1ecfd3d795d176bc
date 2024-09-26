@@ -1,0 +1,77 @@
+package com.wipro.training.bank.service;
+
+import org.springframework.stereotype.Service;
+
+import com.wipro.training.bank.dao.LoginRequest;
+import com.wipro.training.bank.dao.RegisterRequest;
+import com.wipro.training.bank.model.Account;
+import com.wipro.training.bank.repository.AccountRepository;
+import com.wipro.training.bank.util.EncryptionUtil;
+
+/*
+Author-Abhinav Kumar
+Date-Sep 13, 2024
+Time-9:36:10 AM
+Project-daily-bank
+ */
+
+@Service
+public class AccountService {
+
+	private final AccountRepository accountRepository;
+
+	//DI using constructor
+	public AccountService(AccountRepository accountRepository) {
+		this.accountRepository = accountRepository;
+	}
+	
+	public Account openAccount(Account account) {
+		// Generate a 10-digit unique account number
+		account.setAccountNumber(generateAccountNumber());
+		return accountRepository.save(account);
+	}
+
+	public Account registerInternetBanking(RegisterRequest request) {
+		Account account = accountRepository.findByAccountNumber(request.getAccountNumber());
+		if (account != null) {
+			if (request.getLoginPassword().equals(request.getConfirmLoginPassword()) &&
+					request.getTransactionPassword().equals(request.getConfirmTransactionPassword())) {
+
+				// Encrypt passwords before saving
+				account.setUserId(request.getUserId());
+				account.setLoginPassword(EncryptionUtil.encrypt(request.getLoginPassword()));
+				account.setTransactionPassword(EncryptionUtil.encrypt(request.getTransactionPassword()));
+
+				return accountRepository.save(account);
+			} else {
+				throw new IllegalArgumentException("Passwords do not match");
+			}
+		}
+		return null;
+	}
+
+	public Account login(LoginRequest loginRequest) {
+		Account account = accountRepository.findByUserId(loginRequest.getUserId());
+		if (account != null) {
+			// Decrypt the stored password and compare with the provided password
+			String decryptedPassword = EncryptionUtil.decrypt(account.getLoginPassword());
+			if (decryptedPassword.equals(loginRequest.getLoginPassword())) {
+				return account; // Login successful
+			} else {
+				throw new IllegalArgumentException("Invalid login credentials");
+			}
+		} else {
+			throw new IllegalArgumentException("Account not found");
+		}
+	}
+
+	public Account getAccountDetails(String accountNumber) {
+		return accountRepository.findByAccountNumber(accountNumber);
+	}
+
+	private String generateAccountNumber() {
+		// Logic to generate unique 10-digit account number
+		return String.valueOf((long)(Math.random() * 1_000_000_000L + 1_000_000_000L));
+	}
+
+}

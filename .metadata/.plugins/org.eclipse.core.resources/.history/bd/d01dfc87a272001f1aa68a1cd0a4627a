@@ -1,0 +1,12 @@
+package com.wipro.training.bank.service;
+
+/*
+Author-Abhinav Kumar
+Date-Sep 14, 2024
+Time-7:34:04 PM
+Project-daily-bank
+*/
+
+public class AccountManagementService {
+
+}

@@ -1,0 +1,131 @@
+body {
+    font-family: 'Times New Roman', serif;
+    background-color: black; /* Background color for the whole body */
+    color: lime; /* Default text color */
+    text-align: center; /* Center align text */
+}
+
+h2 {
+    color: lime;
+    width: 50%;
+    text-align: center; /* Center the heading text */
+    text-shadow: 2px 2px 5px rgba(255, 255, 0, 0.7); /* Yellow shadow */
+    margin: 0 auto; /* Center the heading itself within its container */
+    margin-bottom: 2%;
+}
+
+.debit-heading {
+    font-weight: bold; /* Make heading bold */
+    color: lime; /* Heading color */
+    margin-bottom: 20px; /* Space below the heading */
+}
+
+.debit-form {
+    display: flex;
+    flex-direction: column; /* Align inputs vertically */
+    align-items: center; /* Center align the inputs */
+    background-color: black; /* Form background color */
+    padding: 20px; /* Padding for the form */
+    border-radius: 5px; /* Rounded corners */
+    max-width: 400px; /* Set a max width for the form */
+    margin: 0 auto; /* Center the form horizontally */
+}
+
+.form-group {
+    width: 80%; /* Set width for the form group */
+}
+
+.form-group label {
+    color: lime; /* Label text color */
+    margin-bottom: 5px; /* Space below the label */
+}
+
+.debit-form input {
+    margin: 10px 0; /* Space between inputs */
+    padding: 12px; /* Padding inside inputs */
+    width: 100%; /* Full width for inputs */
+    border: 2px solid lime; /* Broader lime border for inputs */
+    background-color: black; /* Input background color */
+    color: lime; /* Input text color */
+    border-radius: 5px; /* Rounded corners for inputs */
+}
+
+
+.alert {
+    width: 50%; /* Set width to 50% */
+    margin: 20px auto; /* Center the alert */
+    padding: 15px; /* Padding inside the alert */
+    border-radius: 5px; /* Rounded corners */
+    font-family: 'Times New Roman', serif; /* Font style */
+    text-align: center; /* Center the text */
+    font-weight: bold; /* Make text bold */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); /* Text shadow */
+}
+
+.alert-success {
+    font-size: x-large;
+    background-color: rgba(0, 255, 0, 0.2); /* Light green background */
+    color: rgb(2, 20, 2); /* Text color for success */
+}
+
+.alert-danger {
+    background-color: rgba(255, 0, 0, 0.2); /* Light red background */
+    color: red; /* Text color for error */
+}
+
+.button-container {
+    display: flex;
+    justify-content: center; /* Center the buttons */
+    gap: 10px; /* Space between buttons */
+    margin-top: 20px; /* Space above the buttons */
+}
+
+.debit-button {
+    padding: 10px 20px; /* Button padding */
+    background-color: #007bff; /* Debit button color */
+    color: white; /* Text color */
+    border: none; /* No border */
+    border-radius: 4px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor */
+}
+
+.reset-button {
+    padding: 10px 20px; /* Button padding */
+    background-color: #f44336; /* Reset button color */
+    color: white; /* Text color */
+    border: none; /* No border */
+    border-radius: 4px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor */
+}
+
+/* Optional: Add hover effects */
+.debit-button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+
+.reset-button:hover {
+    background-color: #d32f2f; /* Darker red on hover */
+}
+/* Media queries for responsiveness */
+
+/* For tablets (screens up to 768px wide) */
+@media (max-width: 768px) {
+    .debit-form {
+        width: 90%; /* Increase form width for tablets */
+    }
+
+    .debit-heading {
+        font-size: 28px; /* Adjust heading size for tablets */
+    }
+}
+
+/* For mobile devices (screens up to 480px wide) */
+@media (max-width: 480px) {
+    .debit-form {
+        width: 95%; /* Increase form width for mobile */
+    }
+
+    .debit-heading {
+        font-size: 24px; /* Adjust heading size for mobile */
+    }
+}

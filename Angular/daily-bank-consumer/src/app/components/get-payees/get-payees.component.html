@@ -1,0 +1,21 @@
+<h2 class="payee-heading"style="background-color: black;padding: 10px 10px;">Payees</h2>
+<div class="payee-container">
+  <table class="payee-table">
+    <thead>
+      <tr>
+        <th>S.No</th>
+        <th>Beneficiary Name</th>
+        <th>Account Number</th>
+        <th>Nickname</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let payee of payees; let i = index">
+        <td>{{ i + 1 }}</td>
+        <td>{{ payee.beneficiaryName }}</td>
+        <td>{{ payee.accountNumber }}</td>
+        <td>{{ payee.nickname }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

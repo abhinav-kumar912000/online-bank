@@ -1,0 +1,73 @@
+package com.wipro.training.bank.service;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
+
+import org.springframework.stereotype.Service;
+
+import com.wipro.training.bank.dao.LoginRequest;
+import com.wipro.training.bank.dao.ResetPasswordRequest;
+import com.wipro.training.bank.exception.ResourceNotFoundException;
+import com.wipro.training.bank.model.Account;
+import com.wipro.training.bank.repository.AccountRepository;
+import com.wipro.training.bank.util.EncryptionUtil;
+
+/*
+Author - Abhinav Kumar
+Date - Sep 14, 2024
+Time - 9:07:06 PM
+Project - daily-bank
+ */
+
+@Service
+public class AuthenticationService {
+
+	private final AccountRepository accountRepository;
+
+	// Constructor injection for AccountRepository
+	public AuthenticationService(AccountRepository accountRepository) {
+		this.accountRepository = accountRepository;
+	}
+
+	/**
+	 * Authenticates user login.
+	 */
+	public Account login(LoginRequest loginRequest) {
+		Account account = accountRepository.findByUserId(loginRequest.getUserId());
+		if (account != null) {
+			// Decrypt the stored password and compare with the provided password
+			String decryptedPassword = EncryptionUtil.decrypt(account.getLoginPassword());
+			if (decryptedPassword.equals(loginRequest.getLoginPassword())) {
+				return account; // Login successful
+			} else {
+				throw new IllegalArgumentException("Invalid login credentials");
+			}
+		} else {
+			throw new IllegalArgumentException("Account not found");
+		}
+	}
+	
+	
+	public Account setNewPassword(String userId, String oldPassword, String newPassword, String confirmNewPassword) {
+		Account account = accountRepository.findByUserId(userId);
+		if (account == null) {
+			throw new ResourceNotFoundException("User not found");
+		}
+
+		// Decrypt the current password and check if it matches the provided old password
+		String decryptedOldPassword = EncryptionUtil.decrypt(account.getLoginPassword());
+		if (!decryptedOldPassword.equals(oldPassword)) {
+			throw new IllegalArgumentException("Old password is incorrect");
+		}
+
+		// Check if new password and confirmation match
+		if (!newPassword.equals(confirmNewPassword)) {
+			throw new IllegalArgumentException("New password and confirmation password do not match");
+		}
+
+		// Encrypt the new password and save it
+		account.setLoginPassword(EncryptionUtil.encrypt(newPassword));
+		return accountRepository.save(account);
+	}
+}

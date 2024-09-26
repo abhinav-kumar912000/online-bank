@@ -1,0 +1,56 @@
+<nav class="navbar">
+    <ul class="nav-list">
+      <ng-container>
+             <!--Menu Displayed After user login-->
+
+        <li class="nav-item">
+          <a *ngIf="isUserLoggedIn" routerLink="/home">Home</a>
+        </li>
+
+        <li class="nav-item">
+          <a *ngIf="isUserLoggedIn" routerLink="/dashboard">Dashboard</a>
+        </li>
+        <li class="nav-item">
+          <a *ngIf="isUserLoggedIn" routerLink="/add-payee">Add Payee</a>
+        </li>
+        <li class="nav-item">
+          <a *ngIf="isUserLoggedIn" routerLink="/get-payees">Get Payees</a>
+        </li>
+        <li class="nav-item">
+          <a *ngIf="isUserLoggedIn" routerLink="/set-new-password">Change Password</a>
+        </li>
+        <li class="nav-item">
+          <a *ngIf="isUserLoggedIn" routerLink="/neft">Neft Transfer</a>
+        </li>
+        <li class="nav-item">
+          <a *ngIf="isUserLoggedIn" routerLink="/logout" (click)="handleLogout()">Logout</a>
+        </li>
+
+        <span class="user-style" *ngIf="isUserLoggedIn">
+          <img class="avatar" src="https://e7.pngegg.com/pngimages/84/165/png-clipart-united-states-avatar-organization-information-user-avatar-service-computer-wallpaper-thumbnail.png" alt="Avatar" />
+          Welcome: {{username}}
+        </span>
+
+     <!--Menu Displayed Before user login-->
+        <li class="nav-item">
+          <a *ngIf="!isUserLoggedIn" routerLink="/open">Open Account</a>
+        </li>
+        <li class="nav-item">
+          <a *ngIf="!isUserLoggedIn" routerLink="/register">Register Internet Banking</a>
+        </li>
+      </ng-container>
+      <li class="nav-item">
+        <a *ngIf="!isUserLoggedIn" routerLink="/login">Login</a>
+      </li>
+      <li class="nav-item">
+        <a *ngIf="!isUserLoggedIn" routerLink="/credit">Credit</a>
+      </li>
+      <li class="nav-item">
+        <a *ngIf="!isUserLoggedIn" routerLink="/debit">Debit</a>
+      </li>
+      <li class="nav-item">
+        <a *ngIf="!isUserLoggedIn" routerLink="/about">About Us</a>
+      </li>
+    </ul>
+  </nav>
+

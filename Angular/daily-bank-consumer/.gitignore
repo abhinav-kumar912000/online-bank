@@ -1,0 +1,46 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Dependency directories
+node_modules/
+dist/
+tmp/
+out-tsc/
+coverage/
+
+# System Files
+.DS_Store
+Thumbs.db
+
+# Angular specific
+.angular/
+.idea/
+.vscode/
+
+# Compiled output
+*.d.ts
+*.js
+*.js.map
+
+# IDE specific
+*.iml
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+*.vscode/
+*.history/
+
+# Miscellaneous
+package-lock.json
+yarn.lock
+
+# Environment variables file
+.env
+
+# Optional npm cache directory
+.npm/
+

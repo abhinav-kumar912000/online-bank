@@ -1,0 +1,128 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #1e1e1e; /* Dark background color for the body */
+  }
+  
+  .app {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  
+  .app-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #000000; /* Dark background for the header */
+    color: #00ff00; /* Lime color for text */
+    padding: 20px;
+    border-bottom: 1px solid #333333; /* Darker border for separation */
+  }
+  
+  .app-logo {
+    height: 80px;
+    margin-bottom: 10px;
+  }
+  
+  .app-header h1 {
+    margin: 0;
+    font-size: 50px;
+    font-weight: bold;
+    text-shadow: 4px 4px 4px rgba(246, 250, 244, 0.5); /* Lighter shadow for readability */
+  }
+  
+  .navbar {
+    background-color: #000000; /* Dark background for the navbar */
+    padding: 10px;
+  }
+  
+  .nav-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center; /* Center items horizontally */
+    align-items: center; /* Center items vertically, if needed */
+  }
+  
+  .nav-item {
+    margin: 0 10px; /* Space between nav items */
+  }
+  
+  .nav-item a {
+    display: block;
+    padding: 10px 20px;
+    color: #00ff00; /* Lime color for text */
+    text-decoration: none;
+    font-size: 18px;
+    background-color: #333333; /* Dark background color for nav items */
+    border-radius: 5px;
+    border: 1px solid #444444; /* Dark border around the box */
+    transition: background-color 0.3s, border-color 0.3s;
+  }
+  
+  .nav-item a:hover {
+    background-color: #444444; /* Slightly lighter background on hover */
+    border-color: #555555; /* Lighter border on hover */
+  }
+  
+  section {
+    flex: 1;
+  }
+  
+  footer {
+    background-color: #000000; /* Dark background for the footer */
+    color: #00ff00; /* Lime color for text */
+    text-align: center;
+    padding: 10px;
+    border-top: 1px solid #333333; /* Darker border for separation */
+  }
+  
+  @media (max-width: 768px) {
+    .app-header {
+      padding: 15px;
+    }
+  
+    .app-logo {
+      height: 60px;
+    }
+  
+    .app-header h1 {
+      font-size: 28px;
+    }
+  
+    .nav-list {
+      flex-direction: column;
+    }
+  
+    .nav-item {
+      margin: 5px 0;
+    }
+  
+    .nav-item a {
+      font-size: 16px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .app-header h1 {
+      font-size: 22px;
+    }
+  
+    .app-logo {
+      height: 40px;
+    }
+  
+    .nav-item a {
+      font-size: 14px;
+    }
+  }
+  
+  section > div {
+    background-repeat: no-repeat;
+    background-size: cover;
+    min-height: 140vh;
+    max-width: 100vw;
+  }
+  

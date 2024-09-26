@@ -1,0 +1,115 @@
+/* Container for the form */
+.container {
+    max-width: 600px; /* Maximum width of the form */
+    margin-bottom: 20px; /* Bottom margin */
+    margin-left: auto; /* Center horizontally */
+    margin-right: auto; /* Center horizontally */
+    padding: 20px; /* Padding inside the container */
+    background-color: #0e0101;
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(238, 235, 235, 0.1); /* Subtle shadow */
+}
+  
+  /* Form styling */
+  form {
+    color: lime;
+    display: flex;
+    flex-direction: column; /* Stack form elements vertically */
+  }
+  
+  /* Form group styling */
+  .form-group {
+    margin-bottom: 15px; /* Space between form groups */
+  }
+  
+  /* Label styling */
+  .form-group label {
+    color: lime;
+    display: block; /* Make labels block elements */
+    font-weight: bold; /* Bold text for labels */
+    margin-bottom: 5px; /* Space between label and input */
+  }
+  
+  /* Input field styling */
+  .form-group input {
+    background-color: black;
+    color: lime;
+    width: 100%; /* Full width of the container */
+    padding: 10px; /* Padding inside the input fields */
+    border: 1px solid #ddd; /* Light border color */
+    border-radius: 4px; /* Slightly rounded corners */
+    font-size: 16px; /* Slightly larger font size */
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+  }
+  
+/* Button styling */
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .button-container button {
+    font-weight: bold;
+    background-color: #007bff; /* Blue background */
+    color: #130101; /* White text */
+    border: none; /* Remove border */
+    padding: 10px 15px; /* Padding inside the button */
+    font-size: 16px; /* Font size of the button text */
+    border-radius: 4px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s; /* Smooth background color transition */
+    width: 45%; /* Equal width for buttons */
+  }
+  
+  .button-container button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+  }
+  
+  .button-container button:disabled {
+    background-color: #cccccc; /* Gray background for disabled state */
+    cursor: not-allowed; /* Not-allowed cursor for disabled state */
+  }
+  
+  .button-container .cancel-button {
+    background-color: #dc3545; /* Red background for cancel button */
+  }
+  
+  .button-container .cancel-button:hover {
+    background-color: #c82333; /* Darker red on hover */
+  }
+  
+  
+  /* Message styling */
+  .message {
+    margin-top: 20px; /* Space above the message */
+    padding: 10px; /* Padding inside the message box */
+    border-radius: 4px; /* Rounded corners */
+    background-color: #f8d7da; /* Light red background */
+    font-weight: bold;
+    color: #011b0d; /* Dark red text */
+    border: 1px solid #f5c6cb; /* Light red border */
+  }
+  
+  .message {
+    text-align: center; /* Center align text */
+    width: 50%; /* Set width as needed */
+    margin: 0 auto; /* Center the element horizontally */
+    padding: 10px; /* Add padding for better visibility */
+    border-radius: 5px; /* Optional: round the corners */
+  }
+  
+  .message.success {
+    margin-top: 10px;
+    background-color: #d4edda; /* Light green background */
+    color: #011806; /* Dark green text */
+    border: 1px solid #c3e6cb; /* Light green border */
+  }
+  
+  .message.error {
+    margin-top: 10px;
+    background-color: #f8d7da; /* Light red background */
+    color: #d61031; /* Dark red text */
+    border: 1px solid #f5c6cb; /* Light red border */
+  }
+  

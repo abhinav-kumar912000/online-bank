@@ -1,0 +1,62 @@
+h2 {
+    color: lime;
+    width: 50%;
+    text-align: center; /* Center the heading text */
+    text-shadow: 2px 2px 5px rgba(255, 255, 0, 0.7); /* Yellow shadow */
+    margin: 0 auto; /* Center the heading itself within its container */
+    margin-bottom: 2%;
+    font-weight: bold; /* Make heading bold */
+    margin-bottom: 20px; /* Space below the heading */
+}
+
+.payee-container {
+    overflow-x: auto;
+    background-color: #000; /* Table container background color */
+  }
+  
+  .payee-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 16px;
+    color: #00FF00; /* Table content color (lime) */
+  }
+  
+  .payee-table th, .payee-table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+    background-color: #141414; /* Table cell background color */
+  }
+  
+  .payee-table th {
+    background-color: #333; /* Table header background color */
+    color: #00FF00; /* Table header text color (lime) */
+  }
+  
+  /* Responsive design for mobile and iPad */
+  
+  @media only screen and (max-width: 768px) {
+    .payee-table {
+      font-size: 14px;
+    }
+    .payee-table th, .payee-table td {
+      padding: 5px;
+    }
+  }
+  
+  @media only screen and (max-width: 480px) {
+    .payee-table {
+      font-size: 12px;
+    }
+    .payee-table th, .payee-table td {
+      padding: 2px;
+    }
+  }
+  
+  /* Optional: Make table scrollable horizontally on mobile */
+  
+  .payee-container {
+    overflow-x: auto;
+    -ms-overflow-x: auto;
+    -webkit-overflow-x: auto;
+  }

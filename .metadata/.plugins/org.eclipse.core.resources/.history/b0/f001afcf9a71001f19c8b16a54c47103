@@ -1,0 +1,28 @@
+package com.wipro.training.bank.exception;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+
+/*
+Author-Abhinav Kumar
+Date-Sep 13, 2024
+Time-10:10:48 AM
+Project-daily-bank
+*/
+
+@ControllerAdvice
+public class GlobalExceptionHandler {
+
+	@ExceptionHandler(UnauthorizedException.class)
+    public ResponseEntity<String> handleUnauthorizedException(UnauthorizedException ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.UNAUTHORIZED);
+    }
+	
+	 @ExceptionHandler(AccountNotFoundException.class)
+	    public ResponseEntity<String> handleAccountNotFoundException(AccountNotFoundException ex) {
+	        return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
+	    }
+
+}

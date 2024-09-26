@@ -1,0 +1,108 @@
+package com.wipro.training.bank.service;
+
+import java.time.LocalDateTime;
+
+import org.springframework.stereotype.Service;
+
+import com.wipro.training.bank.dao.AdminRequest;
+import com.wipro.training.bank.exception.AccountNotFoundException;
+import com.wipro.training.bank.exception.InsufficientBalanceException;
+import com.wipro.training.bank.model.Account;
+import com.wipro.training.bank.model.Admin;
+import com.wipro.training.bank.model.Transaction;
+import com.wipro.training.bank.repository.AccountRepository;
+
+/*
+Author-Abhinav Kumar
+Date-Sep 13, 2024
+Time-9:37:56 AM
+Project-daily-bank
+ */
+
+@Service
+public class AdminService {
+
+    private final AccountRepository accountRepository;
+
+    // Constructor for injecting dependencies
+    public AdminService(AccountRepository accountRepository) {
+        this.accountRepository = accountRepository;
+    }
+
+    // Method to credit money to the account
+    public Admin creditMoney(AdminRequest request) {
+        Account account = accountRepository.findByAccountNumber(request.getAccountNumber());
+
+        if (account == null) {
+            throw new AccountNotFoundException("Account not found with account number: " + request.getAccountNumber());
+        }
+
+        Admin admin = account.getAdmin();
+
+        if (admin == null) {
+            // Initialize admin if not present
+            admin = new Admin();
+            account.setAdmin(admin);
+        }
+
+        // Update the admin's total amount
+        double newTotalAmount = admin.getTotalAmount() + request.getAmount();
+        admin.setTotalAmount(newTotalAmount);
+
+        // Create and add a credit transaction
+        Transaction transaction = new Transaction(
+            request.getAmount(),
+            "CREDIT",
+            newTotalAmount,
+            LocalDateTime.now()
+        );
+        admin.getTransactions().add(transaction);
+
+        // Save the updated account
+        accountRepository.save(account);
+
+        return admin;
+    }
+
+    // Method to debit money from the account
+    public Admin debitMoney(AdminRequest request) {
+        Account account = accountRepository.findByAccountNumber(request.getAccountNumber());
+
+        if (account == null) {
+            throw new AccountNotFoundException("Account not found with account number: " 
+        + request.getAccountNumber());
+        }
+
+        Admin admin = account.getAdmin();
+
+        if (admin == null) {
+            // Initialize admin if not present
+            admin = new Admin();
+            account.setAdmin(admin);
+        }
+
+        // Check if there is enough balance for the debit operation
+        double currentTotalAmount = admin.getTotalAmount();
+        if (currentTotalAmount < request.getAmount()) {
+            throw new InsufficientBalanceException("Insufficient balance. Available balance: " + currentTotalAmount);
+        }
+
+        // Update the admin's total amount after debiting
+        double newTotalAmount = currentTotalAmount - request.getAmount();
+        admin.setTotalAmount(newTotalAmount);
+
+        // Create and add a debit transaction
+        Transaction transaction = new Transaction(
+            request.getAmount(),
+            "DEBIT",
+            newTotalAmount,
+            LocalDateTime.now()
+        );
+        admin.getTransactions().add(transaction);
+
+        // Save the updated account
+        accountRepository.save(account);
+
+        return admin;
+    }
+}

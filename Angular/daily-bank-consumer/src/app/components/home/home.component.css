@@ -1,0 +1,98 @@
+.home-page {
+    text-align: center;
+    padding: 40px;
+}
+
+.header {
+    margin-bottom: 40px;
+    background-color: #0f0000;
+    text-align: center;
+}
+
+.features {
+    color: lime;
+    background-color: #130101;
+    display: flex;
+    margin-bottom: 20px;
+    border-width: 1rem;
+}
+
+.feature {
+    
+    flex: 1;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    margin: 0 10px; /* Space between features */
+}
+
+.feature img {
+    width: 100%; /* Make images responsive */
+    height: auto; /* Maintain aspect ratio */
+    margin-bottom: 10px;
+    border-radius: 10px;
+}
+
+.cta {
+    background-color: #110101;
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    color: aqua;
+}
+
+.btn-primary {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+h2 {
+    color: rgb(10, 241, 99);
+}
+
+.slogan {
+    color: rgb(163, 245, 12);
+    font-weight: bold;
+}
+
+#daily {
+    color: #0df50d;
+}
+
+/* Responsive styles */
+@media (max-width: 1024px) {
+    .features {
+        flex-direction: column; /* Stack features on smaller screens */
+        align-items: center; /* Center align features */
+    }
+
+    .feature {
+        margin: 10px 0; /* Space between stacked features */
+        width: 90%; /* Full width for smaller screens */
+    }
+}
+
+@media (max-width: 768px) {
+    .home-page {
+        padding: 20px; /* Reduced padding for smaller devices */
+    }
+
+    .header, .cta {
+        padding: 20px; /* Adjust padding for header and CTA */
+    }
+
+    .btn-primary {
+        width: 100%; /* Full-width button on small screens */
+        font-size: 18px; /* Slightly larger text */
+    }
+}

@@ -1,0 +1,12 @@
+package com.wipro.training.bank.util;
+
+/*
+Author-Abhinav Kumar
+Date-Sep 13, 2024
+Time-11:20:49 AM
+Project-daily-bank
+*/
+
+public class EncryptionUtil {
+
+}

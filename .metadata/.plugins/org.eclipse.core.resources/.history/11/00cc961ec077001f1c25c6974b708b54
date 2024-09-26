@@ -1,0 +1,12 @@
+package com.wipro.training.bank.dao;
+
+/*
+Author-Abhinav Kumar
+Date-Sep 21, 2024
+Time-7:50:12 AM
+Project-daily-bank
+*/
+
+public class PasswordUpdateRequest {
+
+}

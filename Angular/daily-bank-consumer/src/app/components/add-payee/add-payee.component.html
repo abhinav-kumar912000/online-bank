@@ -1,0 +1,44 @@
+<h2>Add Payee</h2>
+<div class="payee-container">
+   
+    <form [formGroup]="payeeForm" (ngSubmit)="addPayee()">
+      <label>
+        Beneficiary Name:
+        <input formControlName="name" />
+        <div *ngIf="payeeForm.get('name')?.invalid && payeeForm.get('name')?.touched">
+          Name is required.
+        </div>
+      </label>
+      
+      <label>
+        Account Number:
+        <input formControlName="accountNumber" />
+        <div *ngIf="payeeForm.get('accountNumber')?.invalid && payeeForm.get('accountNumber')?.touched">
+          Valid account number is required.
+        </div>
+      </label>
+      
+      <label>
+        Confirm Account Number:
+        <input formControlName="confirmAccountNumber" />
+        <div *ngIf="payeeForm.get('confirmAccountNumber')?.invalid && payeeForm.get('confirmAccountNumber')?.touched">
+          Confirm account number is required.
+        </div>
+      </label>
+  
+      <label>
+        Nickname:
+        <input formControlName="nickname" />
+      </label>
+      
+      <div class="button-container">
+        <button type="submit" [disabled]="payeeForm.invalid">Add Payee</button>
+        <button type="button" (click)="payeeForm.reset()">Reset</button>
+      </div>
+      
+      <div *ngIf="successMessage" class="success-message">
+        {{ successMessage }}
+      </div>
+    </form>
+  </div>
+  

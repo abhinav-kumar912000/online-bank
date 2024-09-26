@@ -1,0 +1,12 @@
+package com.wipro.training.bank.controller;
+
+/*
+Author-Abhinav Kumar
+Date-Sep 14, 2024
+Time-9:05:52 PM
+Project-daily-bank
+*/
+
+public class AuthenticationController {
+
+}

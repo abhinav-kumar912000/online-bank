@@ -1,0 +1,12 @@
+package com.wipro.training.bank.repository;
+
+/*
+Author-Abhinav Kumar
+Date-Sep 13, 2024
+Time-9:27:46 AM
+Project-daily-bank
+*/
+
+public interface AccountRepository {
+
+}

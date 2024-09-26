@@ -1,0 +1,19 @@
+package com.wipro.training.bank.dao;
+
+import lombok.Data;
+
+/*
+Author-Abhinav Kumar
+Date-Sep 14, 2024
+Time-2:45:33 PM
+Project-daily-bank
+*/
+
+@Data
+public class ChangePasswordRequest {
+
+	private String accountNumber;
+    private String oldPassword;
+    private String newPassword;
+    private String confirmNewPassword;
+}

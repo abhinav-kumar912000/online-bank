@@ -1,0 +1,115 @@
+package com.wipro.training.bank.controller;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.wipro.training.bank.dao.AccountDetailsDTO;
+import com.wipro.training.bank.dao.LoginRequest;
+import com.wipro.training.bank.dao.RegisterRequest;
+import com.wipro.training.bank.model.Account;
+import com.wipro.training.bank.service.AccountService;
+
+/*
+Author-Abhinav Kumar
+Date-Sep 13, 2024
+Time-9:29:48 AM
+Project-daily-bank
+ */
+
+@RestController
+@RequestMapping("/api/account")
+public class AccountController {
+
+	private static final Logger logger = LoggerFactory.getLogger(AccountController.class);
+	private final AccountService accountService;
+
+	public AccountController(AccountService accountService) {
+		this.accountService = accountService;
+	}
+
+	/*http://localhost:8085/api/account/open
+	 * with JSON DATA 
+		     {
+		  "personalDetails": {
+		    "title": "Mr",
+		    "firstName": "Abhinav",
+		    "middleName": "K",
+		    "lastName": "Bishwas",
+		    "fatherName": "KAmal Kishore",
+		    "mobile": "1234569980",
+		    "email": "abhinav.k@example.com",
+		    "adhar": "1299-5678-9012",
+		    "dob": "2000-01-01"
+		  },
+		  "address": {
+		    "addressLine1": "Sautha Road",
+		    "addressLine2": "Sarochia",
+		    "landmark": "Ambedakar Mission",
+		    "state": "Bihar",
+		    "city": "KAsba",
+		    "pincode": "854325"
+		  }
+		}
+
+	 */
+	@PostMapping("/open")
+	public Account openAccount(@RequestBody Account account) {
+		logger.info("Opening account for user");
+		return accountService.openAccount(account);
+	}
+	/*
+	 * http://localhost:8085/api/account/register
+	 * {
+		  "accountNumber": "1947969018",
+		  "userId": "Abhinav123",
+		  "loginPassword": "password123",
+		  "confirmLoginPassword": "password123",
+		  "transactionPassword": "transaction123",
+		  "confirmTransactionPassword": "transaction123"
+		}
+	 */
+	@PostMapping("/register")
+	public Account registerInternetBanking(@RequestBody RegisterRequest request) {
+		logger.info("Registering internet banking for account number: {}", request.getAccountNumber());
+		return accountService.registerInternetBanking(request);
+	}
+
+	/*http://localhost:8085/api/account/login
+			 {
+				  "userId": "Aniket123",
+				  "loginPassword": "password123"
+				}
+
+	 */
+	@PostMapping("/login")
+	public Account login(@RequestBody LoginRequest loginRequest) {
+		logger.info("Attempting login for user ID: {}", loginRequest.getUserId());
+		return accountService.login(loginRequest);
+	}
+
+
+	/* 
+	 http://localhost:8085/api/account/1947969018
+	 */
+	// Get account details by account number for non-admin users
+	 @GetMapping("/{accountNumber}")
+	    public ResponseEntity<AccountDetailsDTO> getAccountDetails(@PathVariable String accountNumber) {
+	        AccountDetailsDTO dto = accountService.getAccountDetails(accountNumber);
+
+	        if (dto != null) {
+	            return ResponseEntity.ok(dto);
+	        } else {
+	            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+	                                 .body(null);  // Or return a message in case the account is not found
+	        }
+	    }
+
+}

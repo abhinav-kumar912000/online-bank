@@ -1,0 +1,52 @@
+h2 {
+    color: lime;
+    width: 50%;
+    text-align: center; /* Center the heading text */
+    text-shadow: 2px 2px 5px rgba(255, 255, 0, 0.7); /* Yellow shadow */
+    margin: 0 auto; /* Center the heading itself within its container */
+    margin-bottom: 2%;
+}
+.neft-container {
+    max-width: 400px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #0f0101;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(241, 237, 237, 0.1);
+  }
+  
+  label {
+    color: lime; /* Label text color */
+    margin-bottom: 5px; /* Space below the label */
+}
+  
+  input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  button {
+    font-weight:bold;
+    background-color: lime; /* Button color */
+    color: black; /* Button text color */
+    padding: 10px 20px; /* Button padding */
+    border: none; /* No border */
+    cursor: pointer; /* Pointer on hover */
+}
+  button:disabled {
+    background-color: #ccc;
+  }
+  
+  .success {
+    color: green;
+    font-weight: bold;
+    text-align: center;
+  }
+  
+  .error {
+    color: red;
+  }
+  

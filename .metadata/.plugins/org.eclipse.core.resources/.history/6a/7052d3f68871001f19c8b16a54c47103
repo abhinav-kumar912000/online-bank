@@ -1,0 +1,56 @@
+package com.wipro.training.bank.controller;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.wipro.training.bank.controller.dao.LoginRequest;
+import com.wipro.training.bank.controller.dao.RegisterRequest;
+import com.wipro.training.bank.model.Account;
+import com.wipro.training.bank.service.AccountService;
+
+/*
+Author-Abhinav Kumar
+Date-Sep 13, 2024
+Time-9:29:48 AM
+Project-daily-bank
+*/
+
+@RestController
+@RequestMapping("/account")
+public class AccountController {
+	
+	private final AccountService accountService;
+
+    public AccountController(AccountService accountService) {
+        this.accountService = accountService;
+    }
+
+    // 1. Open Account
+    @PostMapping("/open")
+    public Account openAccount(@RequestBody Account account) {
+        return accountService.openAccount(account);
+    }
+
+    // 2. Register Internet Banking
+    @PostMapping("/register")
+    public Account registerInternetBanking(@RequestBody RegisterRequest request) {
+        return accountService.registerInternetBanking(request);
+    }
+
+    // 3. Login
+    @PostMapping("/login")
+    public Account login(@RequestBody LoginRequest loginRequest) {
+        return accountService.login(loginRequest);
+    }
+
+    // 4. Get Account Details
+    @GetMapping("/{accountNumber}")
+    public Account getAccountDetails(@PathVariable String accountNumber) {
+        return accountService.getAccountDetails(accountNumber);
+    }
+
+}

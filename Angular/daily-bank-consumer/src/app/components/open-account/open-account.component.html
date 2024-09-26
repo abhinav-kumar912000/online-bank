@@ -1,0 +1,157 @@
+<form (ngSubmit)="onSubmit(accountForm)" #accountForm="ngForm">
+  <h2>Open Account</h2>
+  
+  <!-- Personal Details -->
+  <fieldset>
+    <legend>Personal Details</legend>
+    <div>
+      <label for="title">Title:</label>
+      <select id="title" [(ngModel)]="account.personalDetails.title" name="title" required #title="ngModel">
+        <option value="" disabled>Select Title</option>
+        <option value="Mr">Mr</option>
+        <option value="Mrs">Mrs</option>
+      </select>
+      <div *ngIf="title.invalid && (title.dirty || title.touched)" class="error"> Title is required. </div>
+    </div>
+    <div>
+      <label for="firstName">First Name:</label>
+      <input type="text" id="firstName" [(ngModel)]="account.personalDetails.firstName" name="firstName" required #firstName="ngModel" placeholder="Enter First Name">
+      <div *ngIf="firstName.invalid && (firstName.dirty || firstName.touched)" class="error"> First Name is required. </div>
+    </div>
+    <div>
+      <label for="middleName">Middle Name:</label>
+      <input type="text" id="middleName" [(ngModel)]="account.personalDetails.middleName" name="middleName" #middleName="ngModel" placeholder="Enter Middle Name (Optional)">
+    </div>
+    <div>
+      <label for="lastName">Last Name:</label>
+      <input type="text" id="lastName" [(ngModel)]="account.personalDetails.lastName" name="lastName" required #lastName="ngModel" placeholder="Enter Last Name">
+      <div *ngIf="lastName.invalid && (lastName.dirty || lastName.touched)" class="error"> Last Name is required. </div>
+    </div>
+    <div>
+      <label for="fatherName">Father's Name:</label>
+      <input type="text" id="fatherName" [(ngModel)]="account.personalDetails.fatherName" name="fatherName" required #fatherName="ngModel" placeholder="Enter Father's Name">
+      <div *ngIf="fatherName.invalid && (fatherName.dirty || fatherName.touched)" class="error"> Father's Name is required. </div>
+    </div>
+    <label for="mobile">Mobile:</label>
+      <input type="text" id="mobile" [(ngModel)]="account.personalDetails.mobile" 
+       name="mobile" required #mobile="ngModel" 
+       pattern="[6-9][0-9]{9}" 
+       placeholder="Enter Mobile Number">
+<div *ngIf="mobile.invalid && (mobile.dirty || mobile.touched)" class="error">
+  Invalid mobile number.
+</div>
+<div>
+  <label for="email">Email:</label>
+  <input type="email" id="email" [(ngModel)]="account.personalDetails.email" 
+         name="email" required #email="ngModel" 
+         pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" 
+         placeholder="Enter Email">
+  
+  <div *ngIf="email.invalid && (email.dirty || email.touched)" class="error">
+    Invalid email address. Please enter a valid email.
+  </div>
+</div>
+    <div>
+      <label for="adhar">Aadhaar:</label>
+      <input type="text" id="adhar" [(ngModel)]="account.personalDetails.adhar" 
+             name="adhar" required #adhar="ngModel" 
+             pattern="[0-9]{4}-[0-9]{4}-[0-9]{4}" 
+             placeholder="Enter Aadhaar Number (XXXX-XXXX-XXXX)">
+      
+      <div *ngIf="adhar.invalid && (adhar.dirty || adhar.touched)" class="error">
+        Invalid Aadhaar number. Please enter in XXXX-XXXX-XXXX format.
+      </div>
+    </div>
+    <div>
+      <label for="dob">Date of Birth:</label>
+      <input type="date" id="dob" [(ngModel)]="account.personalDetails.dob" name="dob" required #dob="ngModel" placeholder="Select Date of Birth">
+      <div *ngIf="dob.invalid && (dob.dirty || dob.touched)" class="error"> Date of Birth is required. </div>
+    </div>
+  </fieldset>
+  
+  <!-- Address -->
+  <fieldset>
+    <legend>Address</legend>
+    <div>
+      <label for="addressLine1">Address Line 1:</label>
+      <input type="text" id="addressLine1" [(ngModel)]="account.address.addressLine1" name="addressLine1" required #addressLine1="ngModel" placeholder="Enter Address Line 1">
+      <div *ngIf="addressLine1.invalid && (addressLine1.dirty || addressLine1.touched)" class="error"> Address Line 1 is required. </div>
+    </div>
+    <div>
+      <label for="addressLine2">Address Line 2:</label>
+      <input type="text" id="addressLine2" [(ngModel)]="account.address.addressLine2" name="addressLine2" required #addressLine2="ngModel" placeholder="Enter Address Line 2">
+      <div *ngIf="addressLine2.invalid && (addressLine2.dirty || addressLine2.touched)" class="error"> Address Line 2 is required. </div>
+    </div>
+    <div>
+      <label for="landmark">Landmark:</label>
+      <input type="text" id="landmark" [(ngModel)]="account.address.landmark" name="landmark" required #landmark="ngModel">
+      <div *ngIf="landmark.invalid && (landmark.dirty || landmark.touched)" class="error"> Landmark is required. </div>
+    </div>
+    <div>
+      <label for="state">State:</label>
+      <select id="state" [(ngModel)]="account.address.state" name="state" required #state="ngModel">
+        <option value="" disabled>Select State</option>
+        <!-- States -->
+        <option value="Andhra Pradesh">Andhra Pradesh</option>
+        <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+        <option value="Assam">Assam</option>
+        <option value="Bihar">Bihar</option>
+        <option value="Chhattisgarh">Chhattisgarh</option>
+        <option value="Goa">Goa</option>
+        <option value="Gujarat">Gujarat</option>
+        <option value="Haryana">Haryana</option>
+        <option value="Himachal Pradesh">Himachal Pradesh</option>
+        <option value="Jharkhand">Jharkhand</option>
+        <option value="Karnataka">Karnataka</option>
+        <option value="Kerala">Kerala</option>
+        <option value="Madhya Pradesh">Madhya Pradesh</option>
+        <option value="Maharashtra">Maharashtra</option>
+        <option value="Manipur">Manipur</option>
+        <option value="Meghalaya">Meghalaya</option>
+        <option value="Mizoram">Mizoram</option>
+        <option value="Nagaland">Nagaland</option>
+        <option value="Odisha">Odisha</option>
+        <option value="Punjab">Punjab</option>
+        <option value="Rajasthan">Rajasthan</option>
+        <option value="Sikkim">Sikkim</option>
+        <option value="Tamil Nadu">Tamil Nadu</option>
+        <option value="Telangana">Telangana</option>
+        <option value="Tripura">Tripura</option>
+        <option value="Uttar Pradesh">Uttar Pradesh</option>
+        <option value="Uttarakhand">Uttarakhand</option>
+        <option value="West Bengal">West Bengal</option>
+        <!-- Union Territories -->
+        <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
+        <option value="Chandigarh">Chandigarh</option>
+        <option value="Dadra and Nagar Haveli and Daman and Diu">Dadra and Nagar Haveli and Daman and Diu</option>
+        <option value="Delhi">Delhi</option>
+        <option value="Jammu and Kashmir">Jammu and Kashmir</option>
+        <option value="Ladakh">Ladakh</option>
+        <option value="Lakshadweep">Lakshadweep</option>
+        <option value="Puducherry">Puducherry</option>
+      </select>
+      <div *ngIf="state.invalid && (state.dirty || state.touched)" class="error"> State is required. </div>
+    </div>
+    <div>
+      <label for="city">City:</label>
+      <input type="text" id="city" [(ngModel)]="account.address.city" name="city" required #city="ngModel">
+      <div *ngIf="city.invalid && (city.dirty || city.touched)" class="error"> City is required. </div>
+    </div>
+    <div>
+      <label for="pincode">Pincode:</label>
+      <input type="text" id="pincode" [(ngModel)]="account.address.pincode" name="pincode" required #pincode="ngModel">
+      <div *ngIf="pincode.invalid && (pincode.dirty || pincode.touched)" class="error"> Pincode is required. </div>
+    </div>
+  </fieldset>
+
+  <div class="button-container">
+    <button type="submit" [disabled]="accountForm.invalid">Open Account</button>
+    <button type="button" (click)="cancel()" style="background-color: red; color: white;">Cancel</button>
+  </div>
+  
+  <!-- Add this div to display submission message -->
+  <div class="success-message" style="text-align: center;"> 
+    {{ submissionMessage }} 
+  </div>
+
+</form>

@@ -1,0 +1,118 @@
+package com.wipro.training.bank.controller;
+
+import java.util.Map;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.wipro.training.bank.dao.ForgotPasswordRequest;
+import com.wipro.training.bank.dao.LoginRequest;
+import com.wipro.training.bank.dao.ResetPasswordRequest;
+import com.wipro.training.bank.exception.ResourceNotFoundException;
+import com.wipro.training.bank.model.Account;
+import com.wipro.training.bank.service.AuthenticationService;
+
+/*
+Author-Abhinav Kumar
+Date-Sep 14, 2024
+Time-9:05:52 PM
+Project-daily-bank
+*/
+
+@CrossOrigin(origins="http://localhost:4200")
+@RestController
+@RequestMapping("/api/account")
+public class AuthenticationController {
+
+    private static final Logger logger = LoggerFactory.getLogger(AccountController.class);
+    private final AuthenticationService authenticationService;
+
+    // Constructor for injecting dependencies
+    public AuthenticationController(AuthenticationService authenticationService) {
+        this.authenticationService = authenticationService;
+    }
+
+    /* 
+     * Endpoint to handle user login
+     * Sample request:
+     * POST http://localhost:8085/api/account/login
+     * {
+     *     "userId": "Aniket123",
+     *     "loginPassword": "password123"
+     * }
+     */
+    @PostMapping("/login")
+    public Account login(@RequestBody LoginRequest loginRequest) {
+        logger.info("Attempting login for user ID: {}", loginRequest.getUserId());
+        return authenticationService.login(loginRequest);
+    }
+
+    /* 
+     * Endpoint for handling forgot password request
+     * Sample request:
+     * POST http://localhost:8085/api/account/forgot-password
+     * {
+     *     "userId": "Aniket123"
+     * }
+     */
+    @PostMapping("/forgot-password")
+    public ResponseEntity<String> forgotPassword(@RequestBody ForgotPasswordRequest request) {
+        logger.info("Handling forgot password request for user ID: {}", request.getUserId());
+        String otp = authenticationService.generateOtp(request.getUserId());
+        // OTP would be sent to the user's registered contact via email/SMS
+        return ResponseEntity.ok("OTP sent to registered contact. OTP: " + otp);
+    }
+
+    /* 
+     * Endpoint for resetting the user's password using OTP
+     * Sample request:
+     * POST http://localhost:8085/api/account/reset-password
+     * {
+     *     "userId": "Aniket123",
+     *     "otp": "123456",
+     *     "newPassword": "newPassword123"
+     * }
+     */
+    @PostMapping("/reset-password")
+    public ResponseEntity<String> resetPassword(@RequestBody ResetPasswordRequest request) {
+        logger.info("Handling password reset request for user ID: {}", request.getUserId());
+        authenticationService.resetPassword(request);
+        return ResponseEntity.ok("Password reset successfully");
+    }
+
+    /* 
+     * Endpoint for setting a new password for the user
+     * Sample request:
+     * POST http://localhost:8085/api/account/setNewPassword
+     * {
+     *     "userId": "Aniket123",
+     *     "oldPassword": "password123",
+     *     "newPassword": "newPassword123",
+     *     "confirmNewPassword": "newPassword123"
+     * }
+     */
+    @PostMapping("/setNewPassword")
+    public ResponseEntity<String> setNewPassword(@RequestBody Map<String, String> passwordDetails) {
+        String userId = passwordDetails.get("userId");
+        String oldPassword = passwordDetails.get("oldPassword");
+        String newPassword = passwordDetails.get("newPassword");
+        String confirmNewPassword = passwordDetails.get("confirmNewPassword");
+
+        try {
+            // Set new password for the user
+            authenticationService.setNewPassword(userId, oldPassword, newPassword, confirmNewPassword);
+            return ResponseEntity.ok("Password updated successfully.");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        } catch (ResourceNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Account not found.");
+        }
+    }
+}
